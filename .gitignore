@@ -1,0 +1,58 @@
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+credentials.json
+secrets.json
+
+# Python environment, bytecode and test caches
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Wake-word model files are downloaded per machine (see WEEK2_REPORT.md), never committed
+*.onnx
+*.tflite
+
+# Local tooling / agent state (machine- and user-specific)
+.claude/
+.cmem-projects/
+agent-transcripts/
+graphify-out/
+_trial_temp/
+
+# OS / editor clutter
+.DS_Store
+Thumbs.db
+
+# Task Observer (auto-generated, session-specific — see CLAUDE.md)
+skill-observations/
+skill-updates/
+
+# --- VESTA evaluation corpus: human voice recordings are PERSONAL DATA (WP2.4) ---
+# The corpus lives OUTSIDE this repository (see docs/wp2_4_evaluation_protocol.md).
+# These rules are a second line of defence in case audio ends up in the tree.
+# NOTE: .gitignore only stops accidental "git add"; it does not stop "git add -f",
+# cloud sync or backups. Keep recordings out of the repository folder entirely.
+*.wav
+*.flac
+*.mp3
+*.m4a
+*.aac
+*.ogg
+*.opus
+*.aiff
+*.aif
+*.wma
+*.amr
+# Corpus-related directories and files
+wakeword_corpus/
+VESTA-data/
+consent/
+private/
+speaker_key*
+# Only tiny SYNTHETIC test clips may ever be committed, and only here:
+!tests/fixtures/synthetic/*.wav
