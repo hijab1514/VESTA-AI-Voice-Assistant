@@ -1,4 +1,5 @@
-```markdown
+
+
 # VESTA – AI Voice Assistant
 
 ### AI-powered voice interaction subsystem for the VESTA Smart Lecture Room
@@ -6,13 +7,12 @@
 [![Python](https://img.shields.io/badge/Python-3.x-3776AB?logo=python&logoColor=white)](https://www.python.org/)
 [![Testing](https://img.shields.io/badge/Testing-pytest-0A9EDC?logo=pytest&logoColor=white)](https://pytest.org/)
 [![Wake Word](https://img.shields.io/badge/Wake%20Word-openWakeWord-5B5BD6)](https://github.com/dscripka/openWakeWord)
-[![Platform](https://img.shields.io/badge/Target-Raspberry%20Pi%205-C51A4A?logo=raspberrypi&logoColor=white)](https://www.raspberrypi.com/)
+[![Target](https://img.shields.io/badge/Target-Raspberry%20Pi%205-C51A4A?logo=raspberrypi&logoColor=white)](https://www.raspberrypi.com/)
 
 > **VESTA – Smart Lecture Room** is an adaptive classroom system designed to sense its environment, understand context and human commands, make decisions, execute actions through hardware, and provide feedback.
 >
-> This repository contains my **AI / Voice Assistant subsystem**, focusing on audio acquisition, audio processing, wake-word detection, evaluation infrastructure, and the interfaces required to connect voice interaction with the larger VESTA intelligence architecture.
+> This repository contains my **AI / Voice Assistant subsystem** — the software foundation for audio acquisition, audio processing, wake-word detection, evaluation, and future voice-to-command integration.
 
----
 
 ## 🌐 Overview
 
@@ -34,7 +34,7 @@ REPORT / RESPOND
 SENSE AGAIN
 ```
 
-The complete VESTA architecture combines:
+The complete architecture combines:
 
 - Classroom perception
 - Voice interaction
@@ -44,23 +44,19 @@ The complete VESTA architecture combines:
 - Application interaction
 - Audio feedback
 
-The larger system includes a **Raspberry Pi 5**, **ReSpeaker XVF3800**, camera, mmWave radar, ambient-light sensing, temperature/humidity sensing, **ESP32-S3**, classroom actuators, speaker output, and a Flutter application.
+The wider VESTA system includes a **Raspberry Pi 5**, **ReSpeaker XVF3800**, camera, LD2410B mmWave radar, BH1750 light sensor, temperature/humidity sensing, **ESP32-S3**, classroom actuators, speaker output, projector-area lighting, and a Flutter application.
 
-### Repository scope
-
-This repository represents **one major subsystem** of VESTA.
-
-It focuses specifically on the **AI / Voice Assistant subsystem** rather than the complete smart classroom implementation.
+> **Repository scope:** this repository represents one major subsystem of VESTA. It does **not** claim to implement the complete smart classroom.
 
 ---
 
-# 🏗️ System Architecture
+## 🏗️ System Architecture
 
-The following diagram is the **authoritative VESTA system architecture** for this project.
+The following image is the **authoritative VESTA system architecture** for this project.
 
 ![VESTA System Architecture](docs/architecture.png)
 
-The complete system is organized into five major stages:
+The complete VESTA architecture is organized into five stages:
 
 | Stage | Role |
 |---|---|
@@ -70,25 +66,13 @@ The complete system is organized into five major stages:
 | **4. ACT** | Execute actions through hardware |
 | **5. REPORT / RESPOND** | Provide feedback through voice, the application, and LEDs |
 
-This creates the intended closed-loop behaviour:
+The intended system behaviour is:
 
-```text
-Sense
-  ↓
-Understand
-  ↓
-Decide
-  ↓
-Act
-  ↓
-Report / Respond
-  ↓
-Sense Again
-```
+**Sense → Understand → Decide → Act → Report / Respond → Sense Again**
 
 ### Classroom Inputs
 
-The architecture receives information from multiple classroom sources:
+The architecture receives information from:
 
 - **Camera**
   - Person detection
@@ -118,99 +102,34 @@ The architecture receives information from multiple classroom sources:
 - **Professor-zone Presence**
   - Professor detection through camera/radar
 
----
+### VESTA Intelligence — Raspberry Pi 5
 
-## 🧠 VESTA Intelligence — Raspberry Pi 5
+The Raspberry Pi 5 hosts the higher-level intelligence shown in the architecture, including:
 
-The Raspberry Pi 5 is the primary intelligence platform shown in the architecture.
+- **Voice AI Pipeline**
+- **Classroom Perception Pipeline**
+- **Decision / Intelligence Engine**
 
-It contains two major perception pathways:
-
-### Voice AI Pipeline
-
-```text
-Audio Acquisition
-        ↓
-Pre-processing
-        ↓
-Wake Word Detection
-        ↓
-VAD
-        ↓
-STT
-        ↓
-Text Processing
-        ↓
-Intent Understanding
-        ↓
-Command Validation / Router
-```
-
-### Classroom Perception Pipeline
-
-```text
-Frame Acquisition
-        ↓
-Person Detection
-        ↓
-Student Counting
-        ↓
-3-Zone Occupancy
-        ↓
-Sensor Data Processing
-```
-
-Both pathways feed the **Decision / Intelligence Engine**.
-
----
-
-## Decision / Intelligence Engine
-
-The architecture defines eight intelligence functions:
+The Decision / Intelligence Engine contains:
 
 1. **Occupancy Intelligence**
-   - Student count
-   - Zone occupancy
-   - Presence
-
 2. **Lighting Intelligence**
-   - Occupancy + lux
-
 3. **Environmental Intelligence**
-   - Temperature
-   - Humidity
-   - Air quality
-
 4. **Climate Control**
-   - Environmental recommendations
-
 5. **Presentation Intelligence**
-   - Projector area
-   - Lighting mode
-
 6. **Schedule Intelligence**
-   - Lecture time
-   - Professor presence
-
 7. **Announcement Intelligence**
-   - Schedule + presence state
-
 8. **Voice Command Routing**
-   - Local commands
-   - Sensor queries
-   - Classroom control
-   - Smart-home commands
-   - General AI interaction
 
-The Voice AI subsystem therefore acts as one input pathway into this larger intelligence layer.
+The Voice AI subsystem provides one major input pathway into this larger intelligence layer.
 
 ---
 
-# 🎙️ My Contribution — AI Voice Assistant
+## 🎙️ My Contribution — AI Voice Assistant
 
-My main contribution to VESTA is the **AI / Voice Assistant subsystem**.
+My primary contribution to VESTA is the **AI / Voice Assistant subsystem**.
 
-The purpose of this subsystem is to provide a natural voice interface through which a user can communicate with the VESTA intelligence layer.
+Its purpose is to provide a natural voice interface through which a user can communicate with the VESTA intelligence layer.
 
 The architecture defines the following voice pathway:
 
@@ -240,118 +159,81 @@ Hardware / Application Action
 Response / TTS
 ```
 
-The important engineering boundary is:
+The current repository concentrates on the **audio and wake-word foundations**.
 
-```text
-                 VOICE AI SUBSYSTEM
-                        │
-                        ▼
-User Voice → Audio → Wake Word → Voice Processing
-                        │
-                        ▼
-                 Structured Command
-                        │
-                        ▼
-             VESTA Intelligence Layer
-                        │
-              ┌─────────┼─────────┐
-              ▼         ▼         ▼
-           ESP32-S3   Speaker   Flutter
-              │
-              ▼
-       Physical Classroom
-            Actions
+VAD, STT, intent understanding, command routing, and complete hardware execution belong to the broader development roadmap.
+
+### Voice AI Subsystem
+
+```mermaid
+flowchart LR
+    A[ReSpeaker XVF3800] --> B[Audio Acquisition]
+    B --> C[Pre-processing]
+    C --> D[Wake Word Detection]
+    D --> E[VAD]
+    E --> F[Speech-to-Text]
+    F --> G[Text Processing]
+    G --> H[Intent Understanding]
+    H --> I[Command Validation / Router]
+    I --> J[VESTA Decision / Intelligence Engine]
+    J --> K[Action / Response]
 ```
 
-The repository currently concentrates on the **audio and wake-word foundations**. The later VAD, STT, intent, routing, and end-to-end hardware stages are part of the broader architecture and development roadmap.
+> This Mermaid diagram describes **only the Voice AI pathway**. The complete VESTA architecture is represented by the authoritative architecture image above.
 
 ---
 
-# 🎙️ Voice Assistant Pipeline
+## 🔊 Voice Interaction Pipeline
 
 | Stage | Purpose | Output |
 |---|---|---|
 | **Audio Acquisition** | Acquire audio from the configured input source | PCM audio frames |
-| **Pre-processing** | Prepare incoming audio for downstream processing | Processed audio frames |
+| **Pre-processing** | Prepare audio for downstream processing | Processed audio frames |
 | **Wake Word Detection** | Detect the assistant activation phrase | Detection event / score |
-| **VAD** | Determine when meaningful speech is present | Speech boundaries |
-| **STT** | Convert spoken language into text | Transcript |
+| **Voice Activity Detection** | Identify meaningful speech activity | Speech boundaries |
+| **Speech-to-Text** | Convert spoken language into text | Transcript |
 | **Text Processing** | Normalize and prepare recognized text | Processed text |
-| **Intent Understanding** | Interpret what the user wants to accomplish | Intent + entities |
+| **Intent Understanding** | Interpret the user's intended action | Intent + entities |
 | **Command Validation / Router** | Validate and route a structured command | Routed command |
-| **Decision Engine** | Combine the command with classroom context | Selected action |
-| **Action / Response** | Execute or communicate the result | Hardware action / response |
+| **Decision Engine** | Combine commands with classroom context | Selected action |
+| **Response / TTS** | Communicate the result | Voice / application response |
 
-### Implementation boundary
+### Current Implementation Boundary
 
-The current repository provides the engineering foundation for:
+The repository currently provides the foundation for:
 
 - Audio acquisition
 - Audio-source abstraction
-- File-based audio input
+- File-based WAV input
 - Audio reframing
 - Wake-word detection
 - OpenWakeWord integration
-- Audio evaluation
+- Audio analysis
+- Audio ingestion
+- Resampling
+- Evaluation manifests
 - Automated testing
+- Configurable logging
 
-The following stages are represented in the overall architecture but remain **in development or planned integration** within this repository:
+The following stages are represented in the overall architecture but are not yet complete in this repository:
 
 - VAD
 - STT
 - Text processing
 - Intent understanding
-- Command validation/routing
+- Command validation / routing
+- Decision-engine integration
 - TTS
 - Complete voice-to-hardware execution
 
 ---
 
-# 🔊 Audio Architecture
+## 🧩 Key Features
 
-A key design decision is to separate **audio acquisition** from higher-level AI processing.
-
-The repository contains separate components for microphone input and file-based audio input, allowing the same downstream processing architecture to work with either live or recorded audio.
-
-Conceptually:
-
-```text
-                    Audio Source
-                         │
-             ┌───────────┴───────────┐
-             │                       │
-             ▼                       ▼
-       Microphone Input         WAV File Input
-             │                       │
-             └───────────┬───────────┘
-                         ▼
-                    Audio Frames
-                         │
-                         ▼
-                      Reframer
-                         │
-                         ▼
-                 Wake Word Detector
-```
-
-This separation provides an engineering boundary between:
-
-- Hardware-specific audio acquisition
-- Audio representation
-- Audio reframing
-- AI inference
-- Evaluation
-
-It also makes recorded audio useful for repeatable software testing without requiring physical microphone hardware for every experiment.
-
----
-
-# 🧩 Key Features
-
-### Current software capabilities
+### Implemented Software
 
 - **Modular audio acquisition**
-- **Microphone input support**
+- **Microphone input implementation**
 - **File-based WAV input**
 - **Audio reframing**
 - **Wake-word detector abstraction**
@@ -361,12 +243,12 @@ It also makes recorded audio useful for repeatable software testing without requ
 - **Resampling utilities**
 - **Evaluation manifests**
 - **Automated testing**
-- **Configurable logging**
-- **Hardware-independent recorded-audio testing**
+- **Structured logging**
+- **Recorded-audio testing**
 
-### Architecture-level capabilities
+### Architecture-Level Capabilities
 
-The wider VESTA architecture additionally defines:
+The wider VESTA architecture defines additional capabilities including:
 
 - Voice activity detection
 - Speech-to-text
@@ -377,15 +259,13 @@ The wider VESTA architecture additionally defines:
 - TTS response
 - Classroom-context reasoning
 
-These should be distinguished from the software currently implemented in this repository.
+These should not be confused with functionality currently implemented in this repository.
 
 ---
 
-# 🧠 Wake Word Detection
+## 🧠 Wake Word Detection
 
 The wake-word subsystem uses a detector abstraction with an **OpenWakeWord** backend.
-
-Conceptually:
 
 ```text
 Audio Frame
@@ -401,19 +281,25 @@ Detection Decision
 Wake Event
 ```
 
-The abstraction keeps the higher-level audio pipeline independent of the specific wake-word engine.
+The abstraction keeps higher-level processing independent of the specific wake-word engine.
 
-This makes the backend replaceable while maintaining a stable interface for the rest of the system.
+This creates a replaceable boundary between:
 
-The repository does **not** claim custom wake-word model training.
+```text
+Audio Input
+     ↓
+Detector Interface
+     ↓
+Wake-word Backend
+```
 
 Wake-word model files are treated as machine-local assets rather than source-code files.
 
 ---
 
-# 🧪 Evaluation & Testing
+## 🧪 Evaluation & Testing
 
-Evaluation is treated as a dedicated engineering component of the project.
+Evaluation is treated as a dedicated engineering component rather than only a final demonstration.
 
 The repository contains infrastructure for:
 
@@ -424,11 +310,12 @@ The repository contains infrastructure for:
 - Recorded-audio processing
 - Wake-word evaluation
 - Audio acquisition testing
+- File-source testing
 - Reframing tests
 - Detector testing
 - Manifest validation
 
-The evaluation architecture is intended to support future controlled experiments involving:
+The evaluation structure is intended to support controlled experiments involving:
 
 - Different speakers
 - Different recording distances
@@ -440,39 +327,31 @@ The evaluation architecture is intended to support future controlled experiments
 - Processing behaviour
 - Raspberry Pi deployment
 
-No accuracy, recall, F1, false-activation rate, or latency value is presented here unless it has been established through the corresponding controlled evaluation.
+> No accuracy, recall, F1, false-activation rate, or latency value is presented here unless established through the corresponding controlled evaluation.
 
----
-
-# 🧪 Testing Strategy
+### Testing Strategy
 
 The project uses **pytest** for automated testing.
 
-Testing is divided into focused modules so that individual components can be validated independently.
-
-### Main testing areas
-
 | Test Area | Purpose |
 |---|---|
-| **Audio acquisition** | Validate audio input behaviour |
-| **File source** | Validate recorded WAV input |
-| **Audio analysis** | Validate signal-analysis utilities |
-| **Reframing** | Validate conversion into processing-sized audio blocks |
-| **Resampling** | Validate audio sample-rate conversion |
-| **Manifest handling** | Validate evaluation metadata |
-| **Ingestion** | Validate evaluation-data ingestion |
-| **Wake-word detector** | Validate the detector abstraction |
-| **OpenWakeWord backend** | Validate the concrete wake-word integration |
+| Audio acquisition | Validate audio-input behaviour |
+| File source | Validate recorded WAV input |
+| Audio analysis | Validate signal-analysis utilities |
+| Reframing | Validate processing-sized audio blocks |
+| Resampling | Validate sample-rate conversion |
+| Manifest handling | Validate evaluation metadata |
+| Ingestion | Validate evaluation-data ingestion |
+| Wake-word detector | Validate detector abstraction |
+| OpenWakeWord backend | Validate concrete wake-word integration |
 
-The testing structure is designed to support incremental development rather than relying only on a final live demonstration.
+The testing structure supports incremental development rather than relying only on a final live demonstration.
 
 ---
 
-# 🔌 Hardware Integration
+## 🔌 Hardware Integration
 
 The Voice AI subsystem is designed to connect the Raspberry Pi intelligence layer with the wider VESTA hardware ecosystem.
-
-The architecture defines the following conceptual relationship:
 
 ```text
 User Voice
@@ -492,13 +371,9 @@ ESP32-S3
 Physical Actuators / Sensors
 ```
 
-The larger architecture also contains:
-
 ### ESP32-S3
 
-The ESP32-S3 is responsible for real-time hardware control in the VESTA system.
-
-The architecture shows it interfacing with:
+The architecture assigns the **ESP32-S3** to real-time hardware control, including interfaces for:
 
 - Three-zone classroom lighting
 - Sensor readings
@@ -508,7 +383,7 @@ The architecture shows it interfacing with:
 
 ### AC Interface
 
-The architecture includes an AC interface using Wi-Fi / IR for climate-control functionality where compatible.
+The architecture includes an **AC Interface using Wi-Fi / IR** for climate-control functionality where compatible.
 
 ### Speaker Audio Output
 
@@ -530,13 +405,13 @@ The Flutter application provides:
 - Notifications
 - Optional user control
 
-> The AI ↔ hardware interface shown in the architecture is explicitly a **conceptual interface**. This repository should not be interpreted as implementing the complete ESP32-S3, AC, speaker, lighting, or Flutter systems.
+> The AI ↔ hardware interface shown in the architecture is a **conceptual interface**. This repository does not claim to implement the complete ESP32-S3, AC, speaker, lighting, or Flutter systems.
 
 ---
 
-# 🔄 Voice Assistant State Machine
+## 🔄 Voice Assistant State Machine
 
-The VESTA architecture defines the following voice-assistant state machine:
+The architecture defines the following intended interaction lifecycle:
 
 ```text
 IDLE
@@ -562,49 +437,46 @@ SPEAKING
 IDLE
 ```
 
-This state machine represents the intended end-to-end interaction lifecycle.
+The state machine represents the **intended end-to-end architecture**.
 
-The presence of a state in the architecture does **not** imply that every state is already implemented in the current repository.
+A state appearing in this diagram does not imply that every state is already implemented in this repository.
 
 ---
 
-# 🔗 AI ↔ Hardware Interface
+## 🔗 AI ↔ Hardware Interface
 
 The architecture defines a conceptual bidirectional interface between the AI / Decision Engine and the ESP32-S3.
 
 ```text
-        AI / Decision Engine
-          (Raspberry Pi 5)
-                  │
-                  │ Structured Command
-                  │
-                  ▼
-              ESP32-S3
-          (Real-time Control)
-                  │
-                  ▼
-      Physical Actuators & Sensors
+AI / Decision Engine
+      │
+      │ Structured Command
+      ▼
+   ESP32-S3
+      │
+      ▼
+Physical Actuators & Sensors
 ```
 
-The reverse direction returns sensor information and execution results:
+Sensor information and execution results return through the reverse path:
 
 ```text
 Physical Sensors
       ↓
-ESP32-S3
+   ESP32-S3
       ↓
 Sensor Response
       ↓
 AI / Decision Engine
 ```
 
-Example conceptual command categories shown in the architecture include:
+Conceptual command categories include:
 
 - `SET_LIGHT_ZONE`
 - `SET_FAN`
 - Other actuator commands
 
-Example conceptual sensor queries include:
+Conceptual sensor queries include:
 
 - Temperature
 - Lux
@@ -614,7 +486,7 @@ These names describe the **architecture/interface concept**, not a finalized har
 
 ---
 
-# 📁 Repository Structure
+## 📁 Repository Structure
 
 ```text
 VESTA-AI-Voice-Assistant/
@@ -666,12 +538,10 @@ VESTA-AI-Voice-Assistant/
 └── .gitignore
 ```
 
-### Directory responsibilities
-
 | Directory | Purpose |
 |---|---|
 | `audio/` | Audio-source interfaces, microphone input, file input, and reframing |
-| `config/` | Configuration and logging |
+| `config/` | Runtime configuration and logging |
 | `docs/` | Project and evaluation documentation |
 | `evaluation/` | Audio analysis, ingestion, manifests, and resampling |
 | `tests/` | Automated tests |
@@ -679,9 +549,9 @@ VESTA-AI-Voice-Assistant/
 
 ---
 
-# ⚙️ Technology Stack
+## ⚙️ Technology Stack
 
-## Voice AI Subsystem
+### Voice AI Subsystem
 
 | Technology | Role |
 |---|---|
@@ -693,9 +563,9 @@ VESTA-AI-Voice-Assistant/
 | **pytest** | Automated testing |
 | **WAV / PCM** | Recorded audio input and evaluation |
 
-## Complete VESTA System
+### Complete VESTA System
 
-| Technology / Hardware | Role in VESTA |
+| Technology / Hardware | Role |
 |---|---|
 | **Raspberry Pi 5** | Main intelligence platform |
 | **ReSpeaker XVF3800** | Four-microphone voice input |
@@ -709,43 +579,43 @@ VESTA-AI-Voice-Assistant/
 | **Projector-area Lighting** | Presentation lighting |
 | **Flutter** | Classroom status and application interaction |
 
-The second table represents the **larger VESTA architecture**, not functionality contained entirely within this repository.
+> The second table represents the **larger VESTA architecture**, not functionality contained entirely within this repository.
 
 ---
 
-# 🚀 Getting Started
+## 🚀 Getting Started
 
-## 1. Clone the repository
+### 1. Clone the repository
 
 ```bash
 git clone https://github.com/hijab1514/VESTA-AI-Voice-Assistant.git
 cd VESTA-AI-Voice-Assistant
 ```
 
-## 2. Create a virtual environment
+### 2. Create a virtual environment
 
-### Windows
+#### Windows
 
 ```powershell
 python -m venv .venv
 .venv\Scripts\activate
 ```
 
-### Linux / Raspberry Pi
+#### Linux / Raspberry Pi
 
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
 ```
 
-## 3. Install dependencies
+### 3. Install dependencies
 
 ```bash
 python -m pip install --upgrade pip
 pip install -r requirements.txt
 ```
 
-## 4. Run the test suite
+### 4. Run the test suite
 
 ```bash
 python -m pytest -q -rs
@@ -753,63 +623,19 @@ python -m pytest -q -rs
 
 Hardware-dependent tests may require the appropriate physical audio hardware.
 
----
-
-# 💻 Usage
+### 5. Recording / Development Demo
 
 The repository contains `record_demo.py` as a recording/demo entry point.
 
-The exact runtime configuration depends on the available audio device and project configuration.
-
-For development, recorded WAV files can also be used as controlled audio input to test the processing and wake-word pipeline without requiring continuous live microphone capture.
-
-The repository deliberately separates:
-
-```text
-Live Audio
-    │
-    ├── Microphone Source
-    │
-    └── Recorded WAV Source
-              │
-              ▼
-       Common Processing
-              │
-              ▼
-       Wake-word Backend
-```
-
-This enables the same downstream components to be exercised using controlled recordings.
+Recorded WAV files can also be used as controlled inputs for development and wake-word evaluation.
 
 ---
 
-# ⚙️ Configuration
+## 💻 Example Workflow
 
-Configuration is organized under:
+The following illustrates the intended architecture for a natural-language classroom command.
 
-```text
-config/settings.py
-```
-
-Logging configuration is provided through:
-
-```text
-config/logging_config.py
-```
-
-Keeping configuration and logging separate from the core audio and wake-word implementation helps maintain a clean separation between runtime configuration and processing logic.
-
-No credentials, API keys, private recordings, or machine-specific paths should be committed to the repository.
-
----
-
-# 💡 Example Workflow
-
-The following illustrates how a natural-language classroom command is intended to move through the complete VESTA architecture.
-
-### Example
-
-> **User:** "Turn on the classroom lights."
+> **User:** “Turn on the classroom lights.”
 
 ```text
 User Voice
@@ -843,54 +669,54 @@ Execution Result
 Response / TTS
 ```
 
-This is an **architectural example** showing the intended system flow. It is not a claim that the complete voice-to-lighting path is already implemented in this repository.
+> This is an **architectural example**, not a claim that the complete voice-to-lighting path is already implemented.
 
 ---
 
-# 🔬 Engineering Design
+## 🔬 Engineering Design
 
-The subsystem is designed around several engineering principles.
+The subsystem is built around several engineering principles.
 
 ### Modularity
 
-Audio acquisition, reframing, wake-word detection, configuration, evaluation, and testing are maintained as separate components.
+Audio acquisition, reframing, wake-word detection, configuration, evaluation, and testing are separated into focused components.
 
 ### Separation of Concerns
 
-Hardware-specific audio capture is separated from higher-level audio processing and wake-word inference.
+Hardware-specific audio capture is separated from audio processing, inference, configuration, and evaluation.
 
 ### Hardware Abstraction
 
-The audio pipeline can work with different sources, including microphone and file-based input, without requiring downstream components to know the details of the source.
+Downstream processing depends on audio interfaces rather than being tightly coupled to a particular physical capture implementation.
 
 ### Testability
 
-Individual modules have dedicated automated tests, while recorded audio provides a reproducible input path for evaluation.
+Individual components have dedicated automated tests, while recorded audio provides a reproducible input path for software evaluation.
 
 ### Replaceable AI Components
 
-The wake-word detector is represented through an abstraction rather than coupling the entire pipeline directly to one inference implementation.
+Wake-word processing is exposed through an abstraction so the inference backend can be changed without redesigning the surrounding pipeline.
 
 ### Reproducibility
 
-Recorded audio, manifests, ingestion tools, resampling utilities, and evaluation infrastructure provide a controlled basis for future experiments.
+Recorded inputs, manifests, ingestion tools, resampling utilities, and automated tests provide a controlled basis for future experiments.
 
 ### Maintainability
 
-The repository is divided into focused modules instead of combining acquisition, inference, configuration, and evaluation into one monolithic application.
+The repository keeps acquisition, inference, configuration, and evaluation in separate modules instead of combining them into a monolithic application.
 
 ### Future Extensibility
 
-The architecture leaves defined boundaries for VAD, STT, intent understanding, command routing, decision-engine integration, and hardware control.
+Defined interfaces leave room for VAD, STT, intent understanding, command routing, decision-engine integration, and hardware control.
 
 ---
 
-# 📊 Current Status
+## 📊 Current Status
 
 | Component | Status |
 |---|---|
 | Audio acquisition abstraction | **Implemented** |
-| Microphone input | **Implemented** |
+| Microphone input implementation | **Implemented** |
 | File-based audio input | **Implemented** |
 | Audio reframing | **Implemented** |
 | Audio analysis utilities | **Implemented** |
@@ -900,13 +726,13 @@ The architecture leaves defined boundaries for VAD, STT, intent understanding, c
 | Evaluation / ingestion infrastructure | **Implemented** |
 | Evaluation manifests | **Implemented** |
 | Automated tests | **Implemented** |
-| VAD | **In development / Planned** |
+| VAD | **Planned** |
 | STT | **Planned** |
 | Text processing | **Planned** |
 | Intent understanding | **Planned** |
 | Command validation / routing | **Planned** |
 | Decision-engine integration | **Planned integration** |
-| ESP32-S3 integration | **Conceptual / Integration stage** |
+| ESP32-S3 integration | **Planned integration** |
 | TTS response | **Planned** |
 | Complete voice-to-hardware loop | **Planned** |
 | Raspberry Pi + ReSpeaker validation | **Pending physical validation** |
@@ -914,12 +740,12 @@ The architecture leaves defined boundaries for VAD, STT, intent understanding, c
 
 ---
 
-# 📈 Development Roadmap
+## 📈 Development Roadmap
 
-## ✅ Completed
+### ✅ Completed
 
 - [x] Audio acquisition architecture
-- [x] Microphone audio source
+- [x] Microphone audio-source implementation
 - [x] File-based audio source
 - [x] Audio reframing
 - [x] Audio analysis utilities
@@ -931,7 +757,7 @@ The architecture leaves defined boundaries for VAD, STT, intent understanding, c
 - [x] Automated testing infrastructure
 - [x] Configuration and logging structure
 
-## 🚧 In Progress
+### 🚧 In Progress
 
 - [ ] Physical Raspberry Pi 5 validation
 - [ ] ReSpeaker hardware validation
@@ -939,7 +765,7 @@ The architecture leaves defined boundaries for VAD, STT, intent understanding, c
 - [ ] Real-world wake-word evaluation
 - [ ] Integration with the wider VESTA system
 
-## 🔮 Planned
+### 🔮 Planned
 
 - [ ] Voice Activity Detection
 - [ ] Speech-to-Text integration
@@ -961,47 +787,51 @@ The architecture leaves defined boundaries for VAD, STT, intent understanding, c
 
 ---
 
-# 🗺️ VESTA Data Flow
+## 🗺️ VESTA Data Flow
 
-The architecture defines the overall data flow as:
+The architecture defines the overall classroom data flow as:
 
 ```text
-                    INPUTS
-                      │
-       Camera • Microphone • Radar
-       Sensors • Schedule • Presence
-                      │
-                      ▼
-              VESTA INTELLIGENCE
-                      │
-        Perception • Reasoning
-        Decision / Intelligence
-                      │
-                      ▼
-                  ACTIONS
-                      │
-        ESP32-S3 • AC • Lights
-        Sensors • Speaker • App
-                      │
-                      ▼
-               EXECUTION RESULT
-                      │
-                      ▼
-             Feedback / Response
-                      │
-                      └───────────────┐
-                                      │
-                                      ▼
-                               CLOSED LOOP
-                               CLASSROOM
-                               INTELLIGENCE
+INPUTS
+  │
+  ├── Camera
+  ├── Microphone
+  ├── Radar
+  ├── Environmental Sensors
+  ├── Schedule
+  └── Presence
+       │
+       ▼
+VESTA INTELLIGENCE
+  │
+  ├── Perception
+  ├── Interpretation
+  ├── Reasoning
+  └── Decision / Intelligence
+       │
+       ▼
+ACTIONS
+  │
+  ├── ESP32-S3
+  ├── AC Interface
+  ├── Lighting
+  ├── Speaker
+  └── Flutter Application
+       │
+       ▼
+EXECUTION RESULT
+       │
+       ▼
+FEEDBACK / RESPONSE
+       │
+       └───────────────→ CLOSED-LOOP CLASSROOM INTELLIGENCE
 ```
 
 The Voice AI subsystem provides the **human voice input pathway** into this loop.
 
 ---
 
-# 🎓 Final-Year Project
+## 🎓 Final-Year Project
 
 **Project:** VESTA – Smart Lecture Room
 
@@ -1011,7 +841,7 @@ The Voice AI subsystem provides the **human voice input pathway** into this loop
 
 **My Role:** AI / Voice Assistant Subsystem
 
-The project combines:
+The wider project combines:
 
 - Artificial intelligence
 - Voice interaction
@@ -1024,13 +854,11 @@ The project combines:
 
 ---
 
-# 👩‍💻 My Contribution
-
-## AI / Voice Assistant Subsystem
+## 👩‍💻 My Contribution
 
 My contribution focuses specifically on the **voice-interaction and AI processing layer** of the larger VESTA system.
 
-Key areas of contribution include:
+Key areas include:
 
 - Voice AI pipeline architecture
 - Audio acquisition
@@ -1046,7 +874,7 @@ Key areas of contribution include:
 - Automated testing
 - Voice-system integration interfaces
 
-The architecture also defines future responsibilities around:
+The broader architecture also defines future work around:
 
 - VAD
 - Speech-to-text
@@ -1059,11 +887,11 @@ The architecture also defines future responsibilities around:
 
 These later components are intentionally separated from the currently implemented audio and wake-word foundation.
 
-### Contribution boundary
+### Contribution Boundary
 
 ```text
 ┌──────────────────────────────────────────────┐
-│              COMPLETE VESTA                  │
+│                 COMPLETE VESTA               │
 │                                              │
 │  Classroom Sensing                           │
 │  Computer Vision                             │
@@ -1081,7 +909,7 @@ The goal is not to claim ownership of the entire VESTA platform, but to develop 
 
 ---
 
-# 🔭 Future Vision
+## 🔭 Future Vision
 
 The long-term goal of VESTA is a classroom that can continuously **perceive its environment, understand human commands, reason about context, coordinate physical systems, and provide intelligent feedback** through a unified AI-driven architecture.
 
@@ -1095,19 +923,19 @@ but:
 
 ```text
 Environment
-     ↓
+    ↓
 Perception
-     ↓
+    ↓
 Understanding
-     ↓
+    ↓
 Contextual Reasoning
-     ↓
+    ↓
 Decision
-     ↓
+    ↓
 Action
-     ↓
+    ↓
 Feedback
-     ↓
+    ↓
 Continuous Sensing
 ```
 
